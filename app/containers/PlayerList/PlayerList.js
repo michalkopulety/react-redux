@@ -6,26 +6,87 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
 import { Helmet } from 'react-helmet';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
 import PlayerCard from 'components/PlayerCard';
+import IconButton from '@material-ui/core/IconButton';
+import ListIcon from '@material-ui/icons/List';
+import CardIcon from '@material-ui/icons/ViewModule';
+import Divider from '@material-ui/core/Divider';
 import { Map, Set } from 'immutable';
-import './style.scss';
 
 const playersCard = (playerId, playerMap) => {
   if (playerId && playerMap) {
     return playerId.map((id) => (
-      <Grid key={id} item xs={6} sm={3}>
+      <Grid key={id} item xs={6} sm={4} md={3} lg={2}>
         <PlayerCard player={playerMap.get(id)} key={id} />
       </Grid>)
     );
   }
 };
 
+const playersTable = (playerId, playerMap) => {
+  if (playerId && playerMap) {
+    return (
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Jméno</TableCell>
+            <TableCell>Příjmení</TableCell>
+            <TableCell numeric>Č. dresu</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {
+            playerId.map((id) => {
+              const player = playerMap.get(id);
+              return (
+                <TableRow key={id} button component="a" href={`/players/${id}`}>
+                  <TableCell component="th" scope="row">
+                    {player.firstName}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {player.lastname}
+                  </TableCell>
+                  <TableCell numeric component="th" scope="row">
+                    {player.jerseyNumber}
+                  </TableCell>
+                </TableRow>
+              );
+            })
+          }
+        </TableBody>
+      </Table>
+    );
+  }
+};
+
 export default class PlayersList extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+  state = {
+    list: false
+  };
+
   componentWillMount() {
     this.props.initalLoad();
   }
+
+  handleShowCardView = () => {
+    this.setState({ list: false });
+  };
+
+  handleShowListView = () => {
+    this.setState({ list: true });
+  };
+
+  handleNavigateToDetail = () => {
+    debugger;
+  };
 
   render() {
     const { playersById, playersList } = this.props;
@@ -34,11 +95,30 @@ export default class PlayersList extends React.PureComponent { // eslint-disable
     return (
       <article>
         <Helmet>
-          <title>Home Page</title>
+          <title>{`Seznam hračů`}</title>
           <meta name="description" content="A React.js Boilerplate application homepage" />
         </Helmet>
-        <Grid container spacing={24}>
-          {playersCard(playersList, playersById)}
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="flex-start"
+        >
+          <Typography variant="headline">
+            Seznam hráčů
+          </Typography>
+          <div>
+            <IconButton aria-label="Grid view" disabled={!this.state.list} onClick={this.handleShowCardView}>
+              <CardIcon />
+            </IconButton>
+            <IconButton aria-label="List view" disabled={this.state.list} onClick={this.handleShowListView}>
+              <ListIcon />
+            </IconButton>
+          </div>
+        </Grid>
+        <Divider />
+        <Grid container spacing={8}>
+          {this.state.list ? playersTable(playersList, playersById) : playersCard(playersList, playersById)}
         </Grid>
       </article>
     );

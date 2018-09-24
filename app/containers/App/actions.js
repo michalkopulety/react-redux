@@ -16,6 +16,10 @@
  */
 
 import {
+  LOAD_PLAYER_FINES,
+  LOAD_PLAYER_FINES_SUCCESS,
+  LOAD_PLAYER_FINES_ERROR,
+
   LOAD_FINES,
   LOAD_FINES_SUCCESS,
   LOAD_FINES_ERROR,
@@ -27,7 +31,15 @@ import {
 
   LOAD_PLAYER,
   LOAD_PLAYER_SUCCESS,
-  LOAD_PLAYER_ERROR
+  LOAD_PLAYER_ERROR,
+
+  INSERT_FINE,
+  INSERT_FINE_SUCCESS,
+  INSERT_FINE_ERROR,
+
+  PAY_DEBT,
+  PAY_DEBT_SUCCESS,
+  PAY_DEBT_ERROR
 } from './constants';
 
 export function loadPlayers() {
@@ -36,11 +48,10 @@ export function loadPlayers() {
   };
 }
 
-export function playersLoaded(playersById, playersId) {
+export function playersLoaded(players) {
   return {
     type: LOAD_PLAYERS_SUCCESS,
-    playersById,
-    playersId
+    players,
   };
 }
 
@@ -51,17 +62,15 @@ export function playersLoadingError(error) {
   };
 }
 
-export function loadPlayer(playerId) {
+export function loadPlayer() {
   return {
     type: LOAD_PLAYER,
-    playerId
   };
 }
 
-export function playerLoaded(playerId, player) {
+export function playerLoaded(player) {
   return {
     type: LOAD_PLAYER_SUCCESS,
-    playerId,
     player
   };
 }
@@ -75,7 +84,7 @@ export function playerLoadingError(error) {
 
 export function loadFines() {
   return {
-    type: LOAD_FINES,
+    type: LOAD_FINES
   };
 }
 
@@ -90,5 +99,65 @@ export function finesLoadingError(error) {
   return {
     type: LOAD_FINES_ERROR,
     error,
+  };
+}
+
+export function loadPlayerFines(playerId) {
+  return {
+    type: LOAD_PLAYER_FINES,
+    playerId
+  };
+}
+
+export function playerFinesLoaded(playerId, fines) {
+  return {
+    type: LOAD_PLAYER_FINES_SUCCESS,
+    playerId,
+    fines
+  };
+}
+
+export function playerFinesLoadingError(error) {
+  return {
+    type: LOAD_PLAYER_FINES_ERROR,
+    error
+  };
+}
+
+export function insertFine(playerId, fine, hash) {
+  return {
+    type: INSERT_FINE,
+    playerId,
+    fine,
+    hash
+  };
+}
+
+export function fineInsertingDone(fine, hash) {
+  return {
+    type: INSERT_FINE_SUCCESS,
+    fine,
+    hash
+  };
+}
+
+export function fineInsertingError(error) {
+  return {
+    type: INSERT_FINE_ERROR,
+    error
+  };
+}
+
+export function payDebt(paidFines) {
+  return {
+    type: PAY_DEBT,
+    paidFines
+  };
+}
+
+export function payingDebtSuccess(paidFines) {
+  return {
+    type: PAY_DEBT_SUCCESS,
+    paidFines
   };
 }

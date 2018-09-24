@@ -1,22 +1,36 @@
-import { put, takeLatest } from 'redux-saga/effects';
-import { LOAD_PLAYER } from 'containers/App/constants';
-import { players } from 'api/Players';
-import { playerLoaded, playerLoadingError } from 'containers/App/actions';
+import { put, takeLatest, call, select } from 'redux-saga/effects';
+import { LOAD_PLAYER, LOAD_PLAYER_FINES } from 'containers/App/constants';
+import { makeSelectCurrentPlayer } from 'containers/App/selectors';
+import { fines } from 'api/Fines';
+import request from 'utils/request';
+import { playerLoaded, playerLoadingError, playerFinesLoaded, playerFinesLoadingError } from 'containers/App/actions';
 
 /**
  * Github repos request/response handler
  */
-export function* getPlayer(action) {
-  // Select username from store
-  // const username = yield select(makeSelectUsername());
-  // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-
+function* getPlayer(action) {
   try {
     // Call our request helper (see 'utils/request')
-    const playersList = players;
-    yield put(playerLoaded(action.playerId, playersList[action.playerId]));
+    const playerId = yield select(makeSelectCurrentPlayer());
+    const requestURL = `http://localhost:3001/api/players/${playerId}`;
+    const response = yield call(request, requestURL);
+    if (response.success) {
+      yield put(playerLoaded(response.data));
+    } else {
+      throw response.error;
+    }
   } catch (err) {
     yield put(playerLoadingError(err));
+  }
+}
+
+function* getFines(action) {
+  try {
+    // Call our request helper (see 'utils/request')
+    const finesList = fines;
+    yield put(playerFinesLoaded(action.playerId, finesList));
+  } catch (err) {
+    yield put(playerFinesLoadingError(err));
   }
 }
 
@@ -24,9 +38,6 @@ export function* getPlayer(action) {
  * Root saga manages watcher lifecycle
  */
 export default function* playerDetail() {
-  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_PLAYER, getPlayer);
+  yield takeLatest(LOAD_PLAYER_FINES, getFines);
 }

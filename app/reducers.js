@@ -19,6 +19,7 @@ import globalReducer from 'containers/App/reducer';
 // Initial routing state
 const routeInitialState = fromJS({
   location: null,
+  playerId: ""
 });
 
 /**
@@ -28,8 +29,14 @@ function routeReducer(state = routeInitialState, action) {
   switch (action.type) {
     /* istanbul ignore next */
     case LOCATION_CHANGE:
+      let playerId = "";
+      const pathParts = action.payload.pathname.split("/").slice(1);
+      if (pathParts[0] === "players") {
+        playerId = pathParts[1];
+      }
       return state.merge({
         location: action.payload,
+        playerId: playerId
       });
     default:
       return state;

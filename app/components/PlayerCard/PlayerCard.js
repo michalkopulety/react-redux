@@ -10,31 +10,30 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = {
   card: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
+    maxWidth: 200,
   },
 };
 
 function PlayerCard(props) {
-  const { player } = props;
+  const { player, classes } = props;
   return (
     <div>
-      <Card className="b">
+      <Card className={classes.card}>
         <CardMedia
-          className="a"
-          image="images/players/dominik_horky.jpg"
-          title="Contemplative Reptile"
+          component="img"
+          image={player.imageUrl ? `/${player.imageUrl}` : `/unknown.jpg`}
+          title={`${player.firstName} ${player.lastname}`}
         />
         <CardContent>
-          <Typography gutterBottom variant="headline" component="h2">
-            {` #${ player.jersey} ${player.firstName} ${ player.lastname}` }
+          <Typography gutterBottom variant="headline">
+            {`${player.lastname}`}
+          </Typography>
+          <Typography gutterBottom variant="subheading">
+            {`${player.firstName}  #${player.jerseyNumber}`}
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" href={`/players/${player.id}`}>
+          <Button size="small" color="primary" href={`/players/${player.hashId}`}>
             Detail
           </Button>
         </CardActions>

@@ -6,12 +6,17 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
 
-const selectRoute = (state) => state.get('route');
+const selectPlayerRoot = (state) => selectGlobal(state).get('players');
+const selectPlayersById = (state) => selectPlayerRoot(state).get('playersById');
+const selectPlayerList = (state) => selectPlayerRoot(state).get('playersId');
 
-const makeSelectCurrentUser = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('currentUser')
-);
+const selectFinesRoot = (state) => selectGlobal(state).get('fines');
+const selectFinesById = (state) => selectFinesRoot(state).get('finesById');
+const selectPaidFines = (state) => selectFinesRoot(state).get('paidFineIdsByPlayerId');
+const selectUnpaidFines = (state) => selectFinesRoot(state).get('unpaidFineIdsByPlayerId');
+
+const selectRoute = (state) => state.get('route');
+const selectRoutePlayerId = (state) => selectRoute(state).get("playerId");
 
 const makeSelectLoading = () => createSelector(
   selectGlobal,
@@ -23,45 +28,67 @@ const makeSelectError = () => createSelector(
   (globalState) => globalState.get('error')
 );
 
-const makeSelectRepos = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['userData', 'repositories'])
-);
-
 const makeSelectLocation = () => createSelector(
   selectRoute,
   (routeState) => routeState.get('location').toJS()
 );
 
+const makeSelectCurrentPlayer = () => createSelector(
+  selectRoutePlayerId,
+  (currentPlayer) => currentPlayer
+);
+
 const makeSelectPlayers = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['players', 'playersById'])
+  selectPlayersById,
+  (playersById) => playersById
 );
 
 const makeSelectPlayer = () => createSelector(
-  [selectGlobal, selectRoute],
-  (globalState, routeState) => {
-    const path = routeState.get('location').pathname;
-    const playerId = path.substring(path.lastIndexOf('/') + 1);
-    const players = globalState.getIn(['players', 'playersById']);
-    return players ? players.get(playerId) : false;
+  [selectPlayersById, selectRoutePlayerId],
+  (playersById, playerId) => {
+    return playersById.get(playerId) || {};
   }
 );
 
 const makeSelectPlayersList = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['players', 'playersId'])
+  selectPlayerList,
+  (playerList) => playerList
 );
 
-const makeSelectFines = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.getIn(['fines', 'finesById'])
+const makeSelectPaidFines = () => createSelector(
+  [selectFinesById, selectPaidFines, selectRoutePlayerId],
+  (finesById, paidFines, playerId) => {
+    const paidFinesList = paidFines.get(playerId) || [];
+    return paidFinesList.map((fineId) => {
+      return finesById.get(fineId);
+    });
+  }
+);
+
+const makeSelectUnpaidFines = () => createSelector(
+  [selectFinesById, selectUnpaidFines, selectRoutePlayerId],
+  (finesById, unpaidFines, playerId) => {
+    const paidFinesList = unpaidFines.get(playerId) || [];
+    return paidFinesList.map((fineId) => {
+      return finesById.get(fineId);
+    });
+  }
+);
+
+const makeSelectFinesById = () => createSelector(
+  [selectFinesById],
+  (finesById) => finesById
+);
+
+const makeSelectUnpaidFinesByPlayerId = () => createSelector(
+  [selectUnpaidFines],
+  (unpaidFinesByPlayerId) => unpaidFinesByPlayerId
 );
 
 export {
   selectGlobal,
   selectRoute,
-  makeSelectCurrentUser,
+  makeSelectCurrentPlayer,
   makeSelectPlayers,
   makeSelectPlayersList,
   makeSelectPlayer,
@@ -69,5 +96,8 @@ export {
   makeSelectError,
   makeSelectRepos,
   makeSelectLocation,
-  makeSelectFines
+  makeSelectPaidFines,
+  makeSelectUnpaidFines,
+  makeSelectFinesById,
+  makeSelectUnpaidFinesByPlayerId
 };

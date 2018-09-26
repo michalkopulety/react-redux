@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import CardMedia from '@material-ui/core/CardMedia';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Button } from '@material-ui/core';
+import image from 'utils/images';
 
 const styles = theme => ({
   card: {
@@ -45,7 +46,7 @@ function PlayerInfo(props) {
           <Card className={classes.card}>
             <CardMedia
               component="img"
-              image={player.imageUrl ? `/${player.imageUrl}` : `/unknown.jpg`}
+              image={player.imageUrl ? image(player.imageUrl) : image("players/unknown.png")}
 
               title={`${player.firstName} ${player.lastname}`}
             />

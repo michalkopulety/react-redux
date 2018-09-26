@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import image from 'utils/images';
 
 const styles = {
   card: {
@@ -21,7 +22,7 @@ function PlayerCard(props) {
       <Card className={classes.card}>
         <CardMedia
           component="img"
-          image={player.imageUrl ? `/${player.imageUrl}` : `/unknown.jpg`}
+          image={player.imageUrl ? image(player.imageUrl) : image("players/unknown.png")}
           title={`${player.firstName} ${player.lastname}`}
         />
         <CardContent>

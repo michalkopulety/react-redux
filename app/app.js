@@ -23,13 +23,6 @@ import App from 'containers/App';
 // Load the favicon
 /* eslint-disable import/no-webpack-loader-syntax */
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
-import '!file-loader?name=[name].[ext]!./images/players/roman_hadraba.jpg';
-import '!file-loader?name=[name].[ext]!./images/players/dominik_horky.jpg';
-import '!file-loader?name=[name].[ext]!./images/players/petr_chalupa.jpg';
-import '!file-loader?name=[name].[ext]!./images/players/david_kopulety.jpg';
-import '!file-loader?name=[name].[ext]!./images/players/michal_kopulety.jpg';
-import '!file-loader?name=[name].[ext]!./images/players/martin_maly.jpg';
-import '!file-loader?name=[name].[ext]!./images/players/unknown.jpg';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 // Import CSS reset and Global Styles

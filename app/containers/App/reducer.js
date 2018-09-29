@@ -27,7 +27,9 @@ import {
   INSERT_FINE_SUCCESS,
   INSERT_FINE_ERROR,
   PAY_DEBT,
-  PAY_DEBT_SUCCESS
+  PAY_DEBT_SUCCESS,
+  CREATE_PLAYER,
+  CREATE_PLAYER_SUCCESS
 } from './constants';
 
 const { Map, Set } = require('immutable');
@@ -129,6 +131,15 @@ const insertPlayers = (state, players) => {
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case CREATE_PLAYER:
+      return state
+        .set('loading', true)
+        .set('error', false);
+    case CREATE_PLAYER_SUCCESS:
+      return state
+        .set('loading', false)
+        .setIn(['players', 'playersById'], state.getIn(['players', 'playersById']).set(action.player.hashId, action.player))
+        .setIn(['players', 'playersId'], state.getIn(['players', 'playersId']).add(action.player.hashId));
     case LOAD_PLAYERS:
       return state
         .set('loading', true)

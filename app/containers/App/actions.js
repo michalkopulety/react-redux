@@ -20,6 +20,10 @@ import {
   LOAD_PLAYER_FINES_SUCCESS,
   LOAD_PLAYER_FINES_ERROR,
 
+  CREATE_PLAYER,
+  CREATE_PLAYER_SUCCESS,
+  CREATE_PLAYER_ERROR,
+
   LOAD_FINES,
   LOAD_FINES_SUCCESS,
   LOAD_FINES_ERROR,
@@ -60,6 +64,20 @@ export function playersLoadingError(error) {
     type: LOAD_PLAYERS_ERROR,
     error,
   };
+}
+
+export function createPlayer(player) {
+  return {
+    type: CREATE_PLAYER,
+    player
+  }
+}
+
+export function playerCreated(player) {
+  return {
+    type: CREATE_PLAYER_SUCCESS,
+    player
+  }
 }
 
 export function loadPlayer() {

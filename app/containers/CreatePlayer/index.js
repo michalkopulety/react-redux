@@ -2,13 +2,13 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import injectSaga from 'utils/injectSaga';
-import { loadPlayers } from '../App/actions';
-import { makeSelectPlayers, makeSelectPlayersList } from '../App/selectors';
-import saga from '../App/saga';
+import { createPlayer } from '../App/actions';
 import CreatePlayer from './CreatePlayer';
+import saga from './saga';
 
 const mapDispatchToProps = (dispatch) => ({
-    postPlayer: () => {
+    postPlayer: (player) => {
+        dispatch(createPlayer(player));
     }
 });
 
@@ -17,4 +17,5 @@ const mapStateToProps = createStructuredSelector({
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(withConnect)(CreatePlayer);
+const withSaga = injectSaga({ key: 'createPlayer', saga });
+export default compose(withSaga, withConnect)(CreatePlayer);

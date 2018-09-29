@@ -44,6 +44,7 @@ class PlayersList extends React.PureComponent {
         postalCode: '',
         jerseyNumber: '',
         facrLink: '',
+        imageUrl: '',
         birthday: convertDateToString(new Date())
     };
 
@@ -65,7 +66,8 @@ class PlayersList extends React.PureComponent {
                 postalCode: this.state.postalCode
             },
             jerseyNumber: this.state.jerseyNumber,
-            facrLink: this.state.facrLink
+            facrLink: this.state.facrLink,
+            imageUrl: this.state.imageUrl
         };
         this.props.postPlayer(player);
     }
@@ -193,6 +195,14 @@ class PlayersList extends React.PureComponent {
                                         label="Link hráče FAČR"
                                         value={this.state.facrLink}
                                         onChange={this.handleChange('facrLink')}
+                                        margin="normal"
+                                    />
+                                    <TextField
+                                        id="imageUrl"
+                                        className={classes.textField}
+                                        label="Název fotky"
+                                        value={this.state.imageUrl}
+                                        onChange={this.handleChange('imageUrl')}
                                         margin="normal"
                                     />
                                 </Grid>

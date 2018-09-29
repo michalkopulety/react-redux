@@ -18,6 +18,7 @@ import PlayerCard from 'components/PlayerCard';
 import IconButton from '@material-ui/core/IconButton';
 import ListIcon from '@material-ui/icons/List';
 import CardIcon from '@material-ui/icons/ViewModule';
+import AddIcon from '@material-ui/icons/LibraryAdd';
 import Divider from '@material-ui/core/Divider';
 import { Map, Set } from 'immutable';
 
@@ -37,6 +38,7 @@ const playersTable = (playerId, playerMap) => {
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell>Fotka</TableCell>
             <TableCell>Jméno</TableCell>
             <TableCell>Příjmení</TableCell>
             <TableCell numeric>Č. dresu</TableCell>
@@ -48,6 +50,9 @@ const playersTable = (playerId, playerMap) => {
               const player = playerMap.get(id);
               return (
                 <TableRow key={id} button component="a" href={`/players/${id}`}>
+                  <TableCell>
+                    <img src={`https://res.cloudinary.com/dtx9htwec/image/upload/w_60,h_60,c_thumb,g_face,r_max/${player.imageUrl}`} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {player.firstName}
                   </TableCell>
@@ -96,7 +101,7 @@ export default class PlayersList extends React.PureComponent { // eslint-disable
       <article>
         <Helmet>
           <title>{`Seznam hračů`}</title>
-          <meta name="description" content="A React.js Boilerplate application homepage" />
+          <meta name="description" content="Seznam hráčů" />
         </Helmet>
         <Grid
           container
@@ -108,6 +113,9 @@ export default class PlayersList extends React.PureComponent { // eslint-disable
             Seznam hráčů
           </Typography>
           <div>
+            <IconButton aria-label="Add player" component="a" href="/players/create">
+              <AddIcon />
+            </IconButton>
             <IconButton aria-label="Grid view" disabled={!this.state.list} onClick={this.handleShowCardView}>
               <CardIcon />
             </IconButton>

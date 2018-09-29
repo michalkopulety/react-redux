@@ -58,8 +58,7 @@ const isInRange = (date, from, to) => {
 };
 
 const _calculateAge = (birthdayString) => {
-    const birthdayArray = birthdayString.split(".");
-    const birthdayDate = new Date(birthdayArray[2], birthdayArray[1] - 1, birthdayArray[0]);
+    const birthdayDate = new Date(birthdayString);
     const ageDifMs = Date.now() - birthdayDate.getTime();
     const ageDate = new Date(ageDifMs); // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -71,9 +70,9 @@ const getPlayers = (playersList, playerMap, comparisonDate) => {
     const to = new Date();
     const oslavenci = hraci.filter((hrac) => {
         if (!hrac.birthday) { return false }
-        const birthDayArray = hrac.birthday.split(".");
-        const birthDay = new Date(new Date().getFullYear(), birthDayArray[1] - 1, birthDayArray[0]);
-        const birthDayPreviousYear = new Date(new Date().getFullYear() - 1, birthDayArray[1] - 1, birthDayArray[0]);
+        const birthDayDate = new Date(hrac.birthday);
+        const birthDay = new Date(new Date().getFullYear(), birthDayDate.getMonth(), birthDayDate.getDate());
+        const birthDayPreviousYear = new Date(new Date().getFullYear() - 1, birthDayDate.getMonth(), birthDayDate.getDate());
         return isInRange(birthDay, comparisonDate, to) || isInRange(birthDayPreviousYear, comparisonDate, to);
     });
 
@@ -86,12 +85,15 @@ const createList = (players) => {
             <Table>
                 <TableBody>
                     {players.map((player) => (
-                        <TableRow key={player.id}>
+                        <TableRow key={player.hashId}>
+                            <TableCell>
+                                <img src={`https://res.cloudinary.com/dtx9htwec/image/upload/w_60,h_60,c_thumb,g_face,r_max/${player.imageUrl}`} />
+                            </TableCell>
                             <TableCell>
                                 {`${player.firstName} ${player.lastname}`}
                             </TableCell>
                             <TableCell>
-                                {`${player.birthday}`}
+                                {`${new Date(player.birthday).toLocaleDateString()}`}
                             </TableCell>
                             <TableCell>
                                 {_calculateAge(player.birthday)}

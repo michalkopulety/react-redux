@@ -1,5 +1,5 @@
 const path = require('path');
-var request = require('request');
+const request = require('request');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');

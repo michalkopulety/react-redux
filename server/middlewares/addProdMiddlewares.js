@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const request = require('request');
 const compression = require('compression');
 
 module.exports = function addProdMiddlewares(app, options) {

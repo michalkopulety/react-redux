@@ -1,7 +1,7 @@
 {
   "name": "CashDesk",
   "version": "1.0.0",
-  "description": "Cash desk app",
+  "description": "Cash desk",
   "repository": {
     "type": "git",
     "url": "git://github.com/flexdinesh/react-redux-boilerplate.git"
@@ -16,9 +16,9 @@
     "prebuild": "npm run build:clean",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./build",
-    "start:dev": "cross-env NODE_ENV=development node server",
+    "start": "cross-env NODE_ENV=development node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
-    "start": "cross-env NODE_ENV=production node server",
+    "start:prod": "cross-env NODE_ENV=production node server",
     "clean": "npm run test:clean && npm run build:clean",
     "lint": "npm run lint:js",
     "lint:eslint": "eslint --ignore-path .gitignore",

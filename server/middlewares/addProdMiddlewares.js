@@ -12,5 +12,16 @@ module.exports = function addProdMiddlewares(app, options) {
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
 
+  app.get('/api/*', (req, res) => {
+    var url = process.env.BACK_END_HOST + req.url;
+    var r = null;
+    if (req.method === 'POST') {
+      r = request.post({ uri: url, json: req.body });
+    } else {
+      r = request(url);
+    }
+
+    req.pipe(r).pipe(res);
+  });
   app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 };

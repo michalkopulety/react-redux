@@ -41,6 +41,10 @@ import {
   INSERT_FINE_SUCCESS,
   INSERT_FINE_ERROR,
 
+  LOAD_FINES_SUM,
+  FINES_SUM_SUCCESS,
+  FINES_SUM_ERROR,
+
   PAY_DEBT,
   PAY_DEBT_SUCCESS,
   PAY_DEBT_ERROR
@@ -177,5 +181,11 @@ export function payingDebtSuccess(paidFines) {
   return {
     type: PAY_DEBT_SUCCESS,
     paidFines
+  };
+}
+
+export function loadFinesSum() {
+  return {
+    type: LOAD_FINES_SUM
   };
 }

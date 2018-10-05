@@ -41,3 +41,7 @@ export const INSERT_FINE_ERROR = 'INSERT_FINE_ERROR';
 export const PAY_DEBT = 'PAY_DEBT';
 export const PAY_DEBT_SUCCESS = 'PAY_DEBT_SUCCESS';
 export const PAY_DEBT_ERROR = 'PAY_DEBT_ERROR';
+
+export const LOAD_FINES_SUM = 'LOAD_FINES_SUM';
+export const FINES_SUM_SUCCESS = 'FINES_SUM_SUCCESS';
+export const FINES_SUM_ERROR = 'FINES_SUM_ERROR';

@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-boilerplate",
+  "name": "CashDesk",
   "version": "1.0.0",
-  "description": "A minimal react-redux boilerplate with all the best practices",
+  "description": "Cash desk app",
   "repository": {
     "type": "git",
     "url": "git://github.com/flexdinesh/react-redux-boilerplate.git"
@@ -10,15 +10,15 @@
     "npm": ">=3",
     "node": ">=5"
   },
-  "author": "Dinesh Pandiyan",
+  "author": "Michal Kopulety",
   "license": "MIT",
   "scripts": {
     "prebuild": "npm run build:clean",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./build",
-    "start": "cross-env NODE_ENV=development node server",
+    "start:dev": "cross-env NODE_ENV=development node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
-    "start:prod": "cross-env NODE_ENV=production node server",
+    "start": "cross-env NODE_ENV=production node server",
     "clean": "npm run test:clean && npm run build:clean",
     "lint": "npm run lint:js",
     "lint:eslint": "eslint --ignore-path .gitignore",
@@ -117,6 +117,5 @@
     "webpack-cli": "^2.0.10",
     "webpack-dev-middleware": "3.1.2",
     "webpack-hot-middleware": "2.21.2"
-  },
-  "proxy": "http://localhost:3001"
+  }
 }

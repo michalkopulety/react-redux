@@ -11,18 +11,10 @@ import { finesLoaded } from './actions';
  * Github repos request/response handler
  */
 export function* getPlayers() {
-  // Select username from store
-  // const username = yield select(makeSelectUsername());
-  // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
   try {
-    // Call our request helper (see 'utils/request')
-    const requestURL = `http://localhost:3001/api/players/`;
+    const requestURL = `/api/players/`;
     const response = yield call(request, requestURL);
-    if (response.success) {
-      yield put(playersLoaded(response.data));
-    } else {
-      throw response.error;
-    }
+    yield put(playersLoaded(response));
   } catch (err) {
     yield put(playersLoadingError(err));
   }

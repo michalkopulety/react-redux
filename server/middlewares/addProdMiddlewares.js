@@ -15,6 +15,7 @@ module.exports = function addProdMiddlewares(app, options) {
 
   app.get('/api/*', (req, res) => {
     var url = process.env.BACK_END_HOST + req.url;
+    console.log(req.url);
     var r = null;
     if (req.method === 'POST') {
       r = request.post({ uri: url, json: req.body });
@@ -24,5 +25,8 @@ module.exports = function addProdMiddlewares(app, options) {
 
     req.pipe(r).pipe(res);
   });
-  app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
+  app.get('*', (req, res) => {
+    console.log(outputPath);
+    return res.sendFile(path.resolve(outputPath, 'index.html'))
+  });
 };

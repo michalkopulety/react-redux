@@ -25,6 +25,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   const fs = middleware.fileSystem;
 
   app.get('/api/*', (req, res) => {
+    console.log(req.url);
     var url = process.env.BACK_END_HOST + req.url;
     var r = null;
     if (req.method === 'POST') {
@@ -37,6 +38,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   });
 
   app.get('*', (req, res) => {
+    console.log(req.url);
     fs.readFile(path.join(compiler.outputPath, 'index.html'), (err, file) => {
       if (err) {
         res.sendStatus(404);

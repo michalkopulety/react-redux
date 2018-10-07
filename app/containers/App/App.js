@@ -11,7 +11,6 @@ import { Switch, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Menu from 'components/Menu';
 import Birthday from 'containers/Birthday/Loadable'
-import HomePage from 'containers/HomePage/Loadable';
 import Players from 'containers/PlayerList/Loadable';
 import CreatePlayer from 'containers/CreatePlayer/Loadable';
 import FinesOverview from 'containers/FinesOverview/Loadable';
@@ -47,7 +46,7 @@ class App extends React.Component {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <Route exact path="/" component={Players} />
               <Route exact path="/players" component={Players} />
               <Route exact path="/players/create" component={CreatePlayer} />
               <Route path="/players/:id" component={PlayerDetail} />

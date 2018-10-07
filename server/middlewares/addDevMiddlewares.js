@@ -26,7 +26,7 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
 
   app.get('/api/*', (req, res) => {
     console.log(req.url);
-    var url = process.env.BACK_END_HOST + req.url;
+    var url = "https://hartvikovice-server.herokuapp.com" + req.url;
     var r = null;
     if (req.method === 'POST') {
       r = request.post({ uri: url, json: req.body });

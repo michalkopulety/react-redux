@@ -23,9 +23,6 @@ import App from 'containers/App';
 import '!file-loader?name=[name].[ext]!./images/logo.png';
 /* eslint-enable import/no-webpack-loader-syntax */
 
-// Import CSS reset and Global Styles
-import 'styles/theme.scss';
-
 import configureStore from './configureStore';
 
 

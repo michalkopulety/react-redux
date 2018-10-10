@@ -38,7 +38,7 @@ function getSorting(order, orderBy) {
 }
 
 function sumTotal(selectedItems, fines) {
-    let a = fines.filter(fine => selectedItems.indexOf(fine._id) !== -1)
+    let a = fines.filter(fine => selectedItems.indexOf(fine.id) !== -1)
     a = a.reduce(
         function (acc, selectedFine) {
             return acc + selectedFine.amount;
@@ -83,7 +83,7 @@ class FinesTable extends React.Component {
 
     handleSelectAllClick = event => {
         if (event.target.checked) {
-            const newSelected = this.props.fines.map(n => n._id);
+            const newSelected = this.props.fines.map(n => n.id);
             this.updateSettings("selected", newSelected);
             this.updateSettings("selectedAmount", sumTotal(newSelected, this.props.fines));
             return;
@@ -157,15 +157,15 @@ class FinesTable extends React.Component {
                                 {stableSort(fines, getSorting(settings.order, settings.orderBy))
                                     .slice(settings.page * settings.rowsPerPage, settings.page * settings.rowsPerPage + settings.rowsPerPage)
                                     .map(n => {
-                                        const isSelected = this.isSelected(n._id);
+                                        const isSelected = this.isSelected(n.id);
                                         return (
                                             <TableRow
                                                 hover
-                                                onClick={event => this.handleClick(event, n._id)}
+                                                onClick={event => this.handleClick(event, n.id)}
                                                 role="checkbox"
                                                 aria-checked={isSelected}
                                                 tabIndex={-1}
-                                                key={n._id}
+                                                key={n.id}
                                                 selected={isSelected}
                                             >
                                                 <TableCell padding="checkbox">

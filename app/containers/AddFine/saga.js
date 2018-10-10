@@ -1,10 +1,7 @@
 import { put, takeLatest, call } from 'redux-saga/effects';
 import { INSERT_FINE } from 'containers/App/constants';
-import { players } from 'api/Players';
-import { fines } from 'api/Fines';
 import request from 'utils/request';
 import { fineInsertingDone, fineInsertingError } from 'containers/App/actions';
-import { makeSelectCurrentPlayer } from 'containers/App/selectors';
 
 function* insertFine(action) {
     try {
@@ -12,7 +9,7 @@ function* insertFine(action) {
         if (!fine.description || !fine.amount) {
             throw "Misssing properties";
         }
-        const requestURL = `http://localhost:3001/api/fines`;
+        const requestURL = `/api/fines`;
         const options = {
             method: 'POST',
             headers: {

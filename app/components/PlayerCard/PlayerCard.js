@@ -34,7 +34,7 @@ function PlayerCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" color="primary" href={`/players/${player.hashId}`}>
+          <Button size="small" color="primary" href={`/players/${player.id}`}>
             Detail
           </Button>
         </CardActions>

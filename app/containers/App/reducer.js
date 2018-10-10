@@ -59,25 +59,18 @@ const insertFines = (state, id, fines) => {
   let unpaidFineIdsByPlayerId = Map();
   let paidFineIdsByPlayerId = Map();
 
-  const insertIntoExisting = () => {
-    let updatedState;
-    for (var fineId in fines) {
-      finesById = finesById.set(fineId, fines[fineId]);
-      const playerId = fines[fineId].playerId;
-      let fineIdsByPlayerId = fines[fineId].isPaid ? paidFineIdsByPlayerId : unpaidFineIdsByPlayerId;
-      fineIdsByPlayerId = fineIdsByPlayerId.get(playerId) ? fineIdsByPlayerId.set(playerId, [fineId].concat(fineIdsByPlayerId.get(playerId))) : fineIdsByPlayerId.set(playerId, [fineId]);
-      if (fines[fineId].isPaid) {
-        paidFineIdsByPlayerId = fineIdsByPlayerId;
-      } else {
-        unpaidFineIdsByPlayerId = fineIdsByPlayerId;
-      }
+  fines.forEach((fine) => {
+    const playerId =  fine.playerId;
+    finesById = finesById.set(fine.id, fine);
+    let fineIdsByPlayerId = fine.isPaid ? paidFineIdsByPlayerId : unpaidFineIdsByPlayerId;
+    fineIdsByPlayerId = fineIdsByPlayerId.get(playerId) ? fineIdsByPlayerId.set(playerId, [fine.id].concat(fineIdsByPlayerId.get(playerId))) : fineIdsByPlayerId.set(playerId, [fine.id]);
+    if (fine.isPaid) {
+      paidFineIdsByPlayerId = fineIdsByPlayerId;
+    } else {
+      unpaidFineIdsByPlayerId = fineIdsByPlayerId;
     }
+  });
 
-
-    return updatedState;
-  };
-
-  insertIntoExisting();
   return state.setIn(['fines', 'finesById'], finesById)
     .setIn(['fines', 'unpaidFineIdsByPlayerId'], unpaidFineIdsByPlayerId)
     .setIn(['fines', 'paidFineIdsByPlayerId'], paidFineIdsByPlayerId)
@@ -110,11 +103,11 @@ const insertPlayerFines = (state, player) => {
   let newState = state;
   player.paidFinesId.forEach((fine) => {
     newState = newState.setIn(['fines', 'finesById', fine._id], fine);
-    newState = pushToArray(newState, ['fines', "paidFineIdsByPlayerId", player.hashId], fine._id);
+    newState = pushToArray(newState, ['fines', "paidFineIdsByPlayerId", player.id], fine._id);
   });
   player.unpaidFinesId.forEach((fine) => {
     newState = newState.setIn(['fines', 'finesById', fine._id], fine);
-    newState = pushToArray(newState, ['fines', "unpaidFineIdsByPlayerId", player.hashId], fine._id);
+    newState = pushToArray(newState, ['fines', "unpaidFineIdsByPlayerId", player.id], fine._id);
   });
   return newState.get('fines');
 };
@@ -122,8 +115,8 @@ const insertPlayerFines = (state, player) => {
 const insertPlayers = (state, players) => {
   let newState = state;
   players.forEach((player) => {
-    newState = newState.setIn(["players", "playersById", player.hashId], player);
-    newState = newState.setIn(["players", "playersId"], newState.getIn(["players", "playersId"]).add(player.hashId));
+    newState = newState.setIn(["players", "playersById", player.id], player);
+    newState = newState.setIn(["players", "playersId"], newState.getIn(["players", "playersId"]).add(player.id));
   });
 
   return newState.get("players");
@@ -138,8 +131,8 @@ function appReducer(state = initialState, action) {
     case CREATE_PLAYER_SUCCESS:
       return state
         .set('loading', false)
-        .setIn(['players', 'playersById'], state.getIn(['players', 'playersById']).set(action.player.hashId, action.player))
-        .setIn(['players', 'playersId'], state.getIn(['players', 'playersId']).add(action.player.hashId));
+        .setIn(['players', 'playersById'], state.getIn(['players', 'playersById']).set(action.player.id, action.player))
+        .setIn(['players', 'playersId'], state.getIn(['players', 'playersId']).add(action.player.id));
     case LOAD_PLAYERS:
       return state
         .set('loading', true)
@@ -159,9 +152,8 @@ function appReducer(state = initialState, action) {
     case LOAD_PLAYER_SUCCESS:
       return state
         .set('loading', false)
-        .setIn(['players', 'playersById'], state.getIn(['players', 'playersById']).set(action.player.hashId, action.player))
-        .setIn(['players', 'playersId'], state.getIn(['players', 'playersId']).add(action.player.hashId))
-        .set('fines', insertPlayerFines(state, action.player));
+        .setIn(['players', 'playersById'], state.getIn(['players', 'playersById']).set(action.player.id, action.player))
+        .setIn(['players', 'playersId'], state.getIn(['players', 'playersId']).add(action.player.id));
     case LOAD_PLAYER_ERROR:
       return state
         .set('error', action.error)

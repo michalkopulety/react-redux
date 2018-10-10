@@ -1,7 +1,5 @@
 import { put, takeLatest, call } from 'redux-saga/effects';
 import { LOAD_PLAYERS, LOAD_FINES } from 'containers/App/constants';
-import { players } from 'api/Players';
-import { fines } from 'api/Fines';
 import { playersLoaded, playersLoadingError } from 'containers/App/actions';
 import request from 'utils/request';
 import { Map, Set } from 'immutable';

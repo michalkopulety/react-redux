@@ -14,7 +14,7 @@ module.exports = function addProdMiddlewares(app, options) {
   app.use(publicPath, express.static(outputPath));
 
   app.get('/api/*', (req, res) => {
-    var url = "https://hartvikovice-server.herokuapp.com" + req.url;
+    var url = process.env.BACK_END_HOST + req.url;
     console.log(req.url);
     var r = null;
     if (req.method === 'POST') {

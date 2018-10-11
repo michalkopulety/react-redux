@@ -146,12 +146,11 @@ export function playerFinesLoadingError(error) {
   };
 }
 
-export function insertFine(playerId, fine, hash) {
+export function insertFine(playerId, fine) {
   return {
     type: INSERT_FINE,
     playerId,
-    fine,
-    hash
+    fine
   };
 }
 

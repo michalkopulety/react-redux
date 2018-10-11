@@ -24,16 +24,17 @@ module.exports = function addDevMiddlewares(app, webpackConfig) {
   // artifacts, we use it instead
   const fs = middleware.fileSystem;
 
-  app.get('/api/*', (req, res) => {
-    console.log(req.url);
+  app.post('/api/*', (req, res) => {
     var url = process.env.BACK_END_HOST + req.url;
-    var r = null;
-    if (req.method === 'POST') {
-      r = request.post({ uri: url, json: req.body });
-    } else {
-      r = request(url);
-    }
+    console.log("POST " + url);
+    var r = request.post({ uri: url, json: req.body });
+    req.pipe(r).pipe(res);
+  });
 
+  app.get('/api/*', (req, res) => {
+    var url = process.env.BACK_END_HOST + req.url;
+    console.log("GET " + url);
+    var r = request(url);
     req.pipe(r).pipe(res);
   });
 

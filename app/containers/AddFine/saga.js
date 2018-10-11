@@ -9,22 +9,22 @@ function* insertFine(action) {
         if (!fine.description || !fine.amount) {
             throw "Misssing properties";
         }
-        const requestURL = `/api/fines`;
+        const requestURL = `/api/players/5bb4d894dd55a22f9c46dd91/fine`;
         const options = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "isPaid": "false",
-                "player": action.playerId,
+                "isPaid": false,
+                "playerId": action.playerId,
                 "description": fine.description,
                 "amount": fine.amount
             })
         };
         const response = yield call(request, requestURL, options);
-        if (response.success) {
-            yield put(fineInsertingDone(response.data, action.hash));
+        if (response) {
+            yield put(fineInsertingDone(response, action.playerId));
         } else {
             throw response.error;
         }

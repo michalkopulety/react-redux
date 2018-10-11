@@ -30,7 +30,7 @@ class AddFine extends React.Component {
     };
 
     handleListItemClick = value => {
-        this.props.addFine(this.props.playerId, value, this.props.hashId);
+        this.props.addFine(this.props.playerId, value);
         this.handleClose();
     };
 
@@ -41,7 +41,6 @@ class AddFine extends React.Component {
     };
 
     render() {
-        const { playerId } = this.props;
         const { openDialog, selectedValue, customText, customAmount, classes } = this.state;
 
         return (

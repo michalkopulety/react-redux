@@ -7,8 +7,8 @@ import saga from './saga';
 import AddFine from './AddFine';
 
 const mapDispatchToProps = (dispatch) => ({
-    addFine: (id, fine, hash) => {
-        dispatch(insertFine(id, fine, hash));
+    addFine: (id, fine) => {
+        dispatch(insertFine(id, fine));
     }
 });
 

@@ -40,7 +40,7 @@ export default class PlayerDetail extends React.Component { // eslint-disable-li
       <Grid spacing={24}>
         <PlayerInfo player={player} />
         <FinesTableContainer playerId={player.id} />
-        <AddFine playerId={player._id} hashId={player.hashId} />
+        <AddFine playerId={player.id} />
       </Grid>
     );
 

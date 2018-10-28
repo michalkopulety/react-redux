@@ -60,7 +60,7 @@ const insertFines = (state, id, fines) => {
   let paidFineIdsByPlayerId = Map();
 
   fines.forEach((fine) => {
-    const playerId =  fine.playerId;
+    const playerId = fine.playerId;
     finesById = finesById.set(fine.id, fine);
     let fineIdsByPlayerId = fine.isPaid ? paidFineIdsByPlayerId : unpaidFineIdsByPlayerId;
     fineIdsByPlayerId = fineIdsByPlayerId.get(playerId) ? fineIdsByPlayerId.set(playerId, [fine.id].concat(fineIdsByPlayerId.get(playerId))) : fineIdsByPlayerId.set(playerId, [fine.id]);
@@ -81,11 +81,11 @@ const updateFines = (state, paidFines) => {
 
   let updatedState = state;
   paidFines.forEach((paidFine) => {
-    const playerId = paidFine.player.hashId;
-    updatedState = state.setIn(['fines', 'finesById', paidFine._id], paidFine);
+    const playerId = paidFine.playerId;
+    updatedState = state.setIn(['fines', 'finesById', paidFine.id], paidFine);
     const unpaidFines = state.getIn(['fines', "unpaidFineIdsByPlayerId", playerId]);
-    const paidFines = state.getIn(['fines', "paidFineIdsByPlayerId", playerId]).concat(paidFine._id);
-    unpaidFines.splice(unpaidFines.indexOf(paidFine._id), 1);
+    const paidFines = state.getIn(['fines', "paidFineIdsByPlayerId", playerId]).concat(paidFine.id);
+    unpaidFines.splice(unpaidFines.indexOf(paidFine.id), 1);
     updatedState = updatedState
       .setIn(['fines', "paidFineIdsByPlayerId", playerId], paidFines)
       .setIn(['fines', "unpaidFineIdsByPlayerId", playerId], unpaidFines)

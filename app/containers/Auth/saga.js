@@ -2,9 +2,8 @@ import { put, takeLatest, call } from 'redux-saga/effects';
 import { PAY_DEBT } from 'containers/App/constants';
 import { payingDebtSuccess } from 'containers/App/actions';
 import request from 'utils/request';
-import { changeSettings } from 'containers/FinesTableContainer/actions';
 
-function* payDebt(action) {
+function* logIn(action) {
     const requestURL = `/api/fines/payFines/`;
     const options = {
         method: 'POST',
@@ -29,5 +28,5 @@ function* payDebt(action) {
  * Root saga manages watcher lifecycle
  */
 export default function* playerDetail() {
-    yield takeLatest(PAY_DEBT, payDebt);
+    yield takeLatest(PAY_DEBT, logIn);
 }

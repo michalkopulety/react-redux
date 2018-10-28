@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
+import Auth from 'containers/Auth';
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -74,6 +75,12 @@ const styles = (theme) => ({
     tableContainer: {
         height: 320,
     },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    avatar: {
+        margin: 10
+    }
 });
 
 class Menu extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -109,9 +116,10 @@ class Menu extends React.Component { // eslint-disable-line react/prefer-statele
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="title" color="inherit" noWrap className={classes.title}>
-                            TJ Sokol Hartvíkovice
+                        <Typography variant="display1" color="inherit" noWrap className={classes.title}>
+                            TJ Hartvíkovice
                         </Typography>
+                        <Auth auth={this.props.auth} />
                     </Toolbar>
                 </AppBar>
                 <Drawer

@@ -5,6 +5,7 @@
 import { fromJS } from 'immutable';
 import { combineReducers } from 'redux-immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import userReducer from 'containers/Auth/reducer'
 
 import globalReducer from 'containers/App/reducer';
 
@@ -38,6 +39,7 @@ function routeReducer(state = routeInitialState, action) {
         location: action.payload,
         playerId: playerId
       });
+
     default:
       return state;
   }
@@ -48,6 +50,7 @@ function routeReducer(state = routeInitialState, action) {
  */
 export default function createReducer(injectedReducers) {
   return combineReducers({
+    user: userReducer,
     route: routeReducer,
     global: globalReducer,
     ...injectedReducers,

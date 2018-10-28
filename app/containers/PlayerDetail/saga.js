@@ -11,11 +11,10 @@ function* getPlayer(action) {
   try {
     // Call our request helper (see 'utils/request')
     const playerId = yield select(makeSelectCurrentPlayer());
-    const player = yield call(request, `/api/players/${playerId}`);
-    const fines = yield call(request, `/api/players/${playerId}/fine`)
+    const player = yield call(request, `/api/players/${playerId}/?filter={"include":"fine"}`);
 
     yield put(playerLoaded(player));
-    yield put(playerFinesLoaded(playerId, fines));
+    yield put(playerFinesLoaded(playerId, player.fine));
   } catch (err) {
     yield put(playerLoadingError(err));
   }

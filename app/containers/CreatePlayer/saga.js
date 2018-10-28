@@ -5,7 +5,7 @@ import request from 'utils/request';
 import { push } from 'react-router-redux';
 
 function* create(action) {
-    const requestURL = `http://localhost:3001/api/players/`;
+    const requestURL = `/api/players/`;
     const options = {
         method: 'POST',
         headers: {
@@ -15,13 +15,9 @@ function* create(action) {
     };
 
     try {
-        const response = yield call(request, requestURL, options);
-        if (response.success) {
-            yield put(playerCreated(response.data));
-            yield put(push(`/players/${response.data.hashId}`));
-        } else {
-            throw response.error;
-        }
+        const player = yield call(request, requestURL, options);
+        yield put(playerCreated(player));
+        yield put(push(`/players/${player.id}`));
     } catch (err) {
         debugger;
     }

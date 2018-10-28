@@ -45,3 +45,5 @@ export const PAY_DEBT_ERROR = 'PAY_DEBT_ERROR';
 export const LOAD_FINES_SUM = 'LOAD_FINES_SUM';
 export const FINES_SUM_SUCCESS = 'FINES_SUM_SUCCESS';
 export const FINES_SUM_ERROR = 'FINES_SUM_ERROR';
+
+export const CHANGE_LOGGED_USER = 'LoginContainer/ChangeLoggedUser';

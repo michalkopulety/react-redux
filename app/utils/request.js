@@ -31,6 +31,16 @@ function checkStatus(response) {
     throw error;
 }
 
+function extendHeader(options = {}) {
+    let headers = options.headers || {};
+    const JWT_TOKEN = localStorage.getItem('access_token');
+    if (JWT_TOKEN) {
+        headers.authorization = `Bearer ${JWT_TOKEN}`;
+    }
+    options.headers = headers;
+    return options;
+}
+
 /**
  * Requests a URL, returning a promise
  *
@@ -40,7 +50,8 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
-    return fetch(url, options)
+
+    return fetch(url, extendHeader(options))
         .then(checkStatus)
         .then(parseJSON);
 }

@@ -44,9 +44,6 @@ class PayDebt extends React.Component {
     payDebt = () => {
         this.props.payDebt(this.props.selectedItems);
         this.setState({ payDebtDialog: false });
-        if (this.props.removeSelection) {
-            this.props.removeSelection();
-        }
     }
 
     render() {

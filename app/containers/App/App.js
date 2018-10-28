@@ -18,6 +18,9 @@ import PlayerDetail from 'containers/PlayerDetail/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Auth from 'containers/Auth/Auth';
+import Callback from 'containers/Auth/Callback';
+import NotSufficientRights from 'components/NotSufficientRights';
 import request from 'utils/request';
 
 const styles = theme => ({
@@ -35,6 +38,14 @@ const styles = theme => ({
 
 const drawerWidth = 240;
 
+const auth = new Auth();
+
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    auth.handleAuthentication(nextState.history);
+  }
+}
+
 class App extends React.Component {
   render() {
     const { classes } = this.props;
@@ -42,16 +53,23 @@ class App extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <div className={classes.root}>
-          <Menu />
+          <Menu auth={auth} />
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Switch>
               <Route exact path="/" component={Players} />
               <Route exact path="/players" component={Players} />
-              <Route exact path="/players/create" component={CreatePlayer} />
+              <Route exact path="/players/create" render={() => (
+                this.props.user.role === "admin" ? (<Route component={CreatePlayer} />)
+                  : (<Route component={NotSufficientRights} />)
+              )} />
               <Route path="/players/:id" component={PlayerDetail} />
               <Route exact path="/birthday" component={Birthday} />
               <Route exact path="/overview" component={FinesOverview} />
+              <Route exact path="/callback" render={(props) => {
+                handleAuthentication(props);
+                return <Callback {...props} />
+              }} />
               <Route path="" component={NotFoundPage} />
             </Switch>
 

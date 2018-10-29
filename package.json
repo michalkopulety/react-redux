@@ -17,7 +17,7 @@
     "build:clean": "rimraf ./build",
     "start:dev": "cross-env NODE_ENV=development node server",
     "start:production": "npm run build && npm run start:prod",
-    "start": "npm run build && node server",
+    "start": "node server",
     "clean": "npm run test:clean && npm run build:clean",
     "lint": "npm run lint:js",
     "lint:eslint": "eslint --ignore-path .gitignore",
@@ -26,7 +26,8 @@
     "pretest": "npm run test:clean && npm run lint",
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
-    "test:watch": "cross-env NODE_ENV=test jest --watchAll"
+    "test:watch": "cross-env NODE_ENV=test jest --watchAll",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@material-ui/core": "^1.2.0",

@@ -6,10 +6,7 @@
     "type": "git",
     "url": "git://github.com/flexdinesh/react-redux-boilerplate.git"
   },
-  "engines": {
-    "npm": ">=3",
-    "node": ">=5"
-  },
+  "engines": {},
   "author": "Michal Kopulety",
   "license": "MIT",
   "scripts": {

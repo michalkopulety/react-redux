@@ -8,9 +8,9 @@ import { changeLoggedUser } from './actions';
 
 export default class Auth {
     auth0 = new auth0.WebAuth({
-        domain: 'hartal.eu.auth0.com',
-        clientID: 'g6z3GYHUxQZfgy4i47G27df86EWwdRHh',
-        redirectUri: 'http://localhost:3000/callback',
+        domain: process.env.AUTH0_DOMAIN,
+        clientID: process.env.AUTH0_CLIENT_ID,
+        redirectUri: process.env.AUTH0_CALLBACK_URL,
         responseType: 'token id_token',
         scope: 'openid profile create:fine create:player read:fines read:players pay:fines',
         audience: 'hartal'

@@ -6,12 +6,13 @@
     "type": "git",
     "url": "git://github.com/flexdinesh/react-redux-boilerplate.git"
   },
-  "engines": {},
+  "engines": {
+    "node": "8.9.4",
+    "npm": "5.6.x"
+  },
   "author": "Michal Kopulety",
   "license": "MIT",
   "scripts": {
-    "heroku-prebuild": "export NPM_CONFIG_PRODUCTION=false; export NODE_ENV=; NPM_CONFIG_PRODUCTION=false NODE_ENV=development npm install --only=dev --dev",
-    "heroku-postbuild": "export NPM_CONFIG_PRODUCTION=true; export NODE_ENV=production;",
     "prebuild": "npm run build:clean",
     "build": "cross-env node --optimize_for_size --max_old_space_size=460 --gc_interval=100 node_modules/webpack/bin/webpack.js --config config/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./build",
